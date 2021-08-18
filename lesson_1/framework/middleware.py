@@ -1,4 +1,4 @@
-allow_hosts = ['*']
+allow_hosts = ['*',]
 
 
 def check_allowed_hosts(host):
