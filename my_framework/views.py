@@ -12,3 +12,7 @@ class NotAccess:
     def __call__(self,  *args, **kwargs):
         return "401 Not_access", "You don't have access"
 
+class Contacts:
+    def __call__(self,  *args, **kwargs):
+        return '200 OK', render('contacts.html')
+

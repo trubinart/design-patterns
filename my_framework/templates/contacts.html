@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Контакты</title>
+    <style>
+        .obratnuj-zvonok{
+	width: 100%;
+	max-width: 350px;
+}
+.form-zvonok{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 0 20px;
+	box-sizing: border-box;
+}
+.form-zvonok div{
+	padding: 15px 0;
+}
+.bot-send-mail{
+	box-sizing: border-box;
+	width: 100%;
+}
+.form-zvonok label,.form-zvonok input{
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+}
+.form-zvonok label{
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+.form-zvonok input{
+	padding: 10px 15px;
+	margin-top: 10px;
+}
+.form-zvonok label span{
+	color: red;
+}
+.form-zvonok .bot-send-mail{
+	padding: 15px;
+	margin-top: 10px;
+	background: none;
+	border: none;
+	text-transform: uppercase;
+	color: #fff;
+	font-weight: bold;
+	background-color: #009b97;
+	cursor: pointer;
+	border: 3px #009b97 solid;
+	border-radius: 5px;
+}
+.form-zvonok .bot-send-mail:hover{
+	color: #009b97;
+	background-color: #fff;
+}
+    </style>
+</head>
+<body>
+
+<form class="obratnuj-zvonok" autocomplete="off" method='post'>
+<div class="form-zvonok">
+  <div>
+    <label>Тема <span>*</span></label>
+    <input type='text' name='topic' required></div>
+  <div>
+    <label>Текст <span>*</span></label>
+    <input type='text' name='text' required></div>
+  <div>
+    <label>Email</label>
+    <input type='text' name='email'>
+  </div>
+  <input class="bot-send-mail" type='submit' value='Отправить сообщение'>
+</div>
+</form>
+
+</body>
+</html>

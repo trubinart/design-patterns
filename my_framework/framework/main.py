@@ -1,12 +1,13 @@
 from pprint import pprint
 from .middleware import check_allowed_hosts
-
+from .requests import GetRequest, PostRequest
 
 class Framework:
     def __init__(self, routes):
         self.routes = routes
 
     def __call__(self, environ, start_response):
+        request = {}
 
         # Беру хост из environ
         host = environ['REMOTE_ADDR']
@@ -33,6 +34,18 @@ class Framework:
             view = self.routes.get(url)
         else:
             view = self.routes.get('no_page')
+
+        # Беру метод запроса и обрабатываю его
+        method = environ['REQUEST_METHOD']
+
+        if method == 'GET' and environ['QUERY_STRING']:
+            data = GetRequest().split_params(environ['QUERY_STRING'])
+            request['data'] = data
+            print(request)
+
+        if method == 'POST' and environ['CONTENT_LENGTH']:
+            data = PostRequest().get_bytes(environ)
+            print(data['text'])
 
         # Возвращаю ответ
         response_code, response_body = view()
