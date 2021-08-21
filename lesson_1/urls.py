@@ -1,7 +1,7 @@
-from views import Index, No_page, Not_access
+from views import Index, NoPage, NotAccess
 
 routes = {
     '/': Index(),
-    'no_page': No_page(),
-    'not_access': Not_access(),
+    'no_page': NoPage(),
+    'not_access': NotAccess(),
 }
