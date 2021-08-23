@@ -2,6 +2,7 @@ from pprint import pprint
 from .middleware import check_allowed_hosts
 from .requests import GetRequest, PostRequest
 
+
 class Framework:
     def __init__(self, routes):
         self.routes = routes
@@ -52,4 +53,3 @@ class Framework:
         headers = [('Content-Type', 'text/html')]
         start_response(response_code, headers)
         return [response_body.encode('utf-8')]
-
