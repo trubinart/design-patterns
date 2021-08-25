@@ -46,7 +46,7 @@ class Framework:
 
         if method == 'POST' and environ['CONTENT_LENGTH']:
             data = PostRequest().get_bytes(environ)
-            print(data['text'])
+            print(data)
 
         # Возвращаю ответ
         response_code, response_body = view()

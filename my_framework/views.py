@@ -1,8 +1,9 @@
 from framework.render import render
+import datetime
 
 class Index:
     def __call__(self,  *args, **kwargs):
-        return '200 OK', render('index.html')
+        return '200 OK', render('index.html', data=datetime.datetime.today().strftime("%d.%m.%Y"))
 
 class NoPage:
     def __call__(self,  *args, **kwargs):
