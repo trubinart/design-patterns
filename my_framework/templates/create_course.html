@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "menu.html" %}
+<div style="height: 50px"></div>
+{% endblock %}
+
+{% block body %}
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <h2>Создать офлайн курс</h2>
+            <form action="" method='post'>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Название курса</label>
+                    <input name="name" type="text" class="form-control" id="exampleInputEmail1"
+                           aria-describedby="emailHelp">
+                    <div class="mb-3">
+                        <select class="form-select" name="category_id" aria-label="Default select example">
+                            <option selected>Категория</option>
+                            {% for item in objects_list %}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                            {%endfor%}
+                        </select>
+                        <div class="mb-3">
+                            <select class="form-select" name="type" aria-label="Default select example">
+                                <option selected>Тип</option>
+                                <option value="life">Офлайн формат</option>
+                                <option value="online">Онлайн формат</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <select class="form-select" name="place_offline" aria-label="Default select example">
+                                <option selected>Адрес для оффлайн</option>
+                                <option value="office_1">Офис в центре</option>
+                                <option value="office_2">Офис в химках</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <select class="form-select" name="place_online" aria-label="Default select example">
+                                <option selected>Место для онлайн</option>
+                                <option value="gm">Google Meet</option>
+                                <option value="zoom">Zoom</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Создать</button>
+            </form>
+
+        </div>
+
+
+        <div class="col-sm">
+        </div>
+    </div>
+</div>
+
+</body>
+{% endblock %}

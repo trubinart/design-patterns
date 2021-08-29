@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "menu.html" %}
+<div style="height: 50px"></div>
+{% endblock %}
+
+{% block body %}
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <h2>Редактировать данные курса</h2>
+            <form action="/create-course/" method='post'>
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="exampleFormControlInput1"
+                               name="name" value="{{item.name}}">
+                    </div>
+
+                    <div class="mb-3">
+                        <select class="form-select" name="category_id" aria-label="Default select example">
+                            <option value="{{item.category.id}}" selected>{{item.category.name}}</option>
+                            {% for item in objects_list %}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <select class="form-select" name="{{type_place}}" aria-label="Default select example">
+                            {% for key, value in places.items() %}
+                            {% if value == item.place %}
+                            <option value="{{key}}" selected>{{value}}</option>
+                            {% else %}
+                            <option value="{{key}}">{{value}}</option>
+                            {% endif %}
+                            {%endfor%}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <input name="type" value="{{type_course}}" type="hidden">
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </form>
+
+        </div>
+
+        <div class="col-sm">
+
+        </div>
+
+        <div class="col-sm">
+        </div>
+    </div>
+</div>
+
+</body>
+{% endblock %}

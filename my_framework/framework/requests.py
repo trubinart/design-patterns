@@ -14,6 +14,7 @@ class GetRequest:
 
 
 class PostRequest:
+
     def get_bytes(self, env: dict):
         data = {}
         length_data = env.get('CONTENT_LENGTH')

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "menu.html" %}
+<div style="height: 50px"></div>
+{% endblock %}
+
+{% block body %}
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <h2>Выберите курс для копирования</h2>
+            <form action="/copy-course/" method='post'>
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <select class="form-select" name="course_for_copy" aria-label="Default select example">
+                            <option selected>Курс</option>
+                            {% for item in objects_list %}
+                            <option value="{{item.name}}">{{item.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Скопировать</button>
+            </form>
+
+        </div>
+
+        <div class="col-sm">
+
+        </div>
+
+        <div class="col-sm">
+        </div>
+    </div>
+</div>
+
+</body>
+{% endblock %}

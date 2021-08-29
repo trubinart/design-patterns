@@ -2,6 +2,13 @@ from pprint import pprint
 from .middleware import check_allowed_hosts
 from .requests import GetRequest, PostRequest
 
+import sys
+
+sys.path.append("..")
+from patterns.patterns import Logger
+
+logger = Logger('main')
+
 
 class Framework:
     def __init__(self, routes):
@@ -42,14 +49,19 @@ class Framework:
         if method == 'GET' and environ['QUERY_STRING']:
             data = GetRequest().split_params(environ['QUERY_STRING'])
             request['data'] = data
-            print(request)
+            request['path'] = url
+            logger.write(f'{method} | {url} | {data}')
 
         if method == 'POST' and environ['CONTENT_LENGTH']:
             data = PostRequest().get_bytes(environ)
-            print(data)
+            request['data'] = data
+            request['path'] = url
+            logger.write(f'{method} | {url} | {data}')
+
 
         # Возвращаю ответ
-        response_code, response_body = view()
+        request['method'] = environ['REQUEST_METHOD']
+        response_code, response_body = view(request)
         headers = [('Content-Type', 'text/html')]
         start_response(response_code, headers)
         return [response_body.encode('utf-8')]
