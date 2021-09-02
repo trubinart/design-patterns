@@ -1,8 +1,36 @@
 import copy
 import os
+from abc import ABC, abstractmethod
+
+class MainCategoryPrototype(ABC):
+    all_main_category = []
+    all_main_category_name = []
+
+    def set_parent(self, parent):
+        self.parent = parent
+
+    def get_main_gategory(self, name):
+        for i in self.all_main_category:
+            if i.name == name:
+                return i
 
 
-class Category:
+class MainCategory(MainCategoryPrototype):
+    def __init__(self, name):
+        self.name = name
+        self.category = []
+        self.all_main_category.append(self)
+        self.all_main_category_name.append(name)
+
+    def add(self, category):
+        self.category.append(category)
+        category.set_parent(self)
+
+    def remove(self, category):
+        self.category.remove(category)
+        category.set_parent(None)
+
+class Category(MainCategoryPrototype):
     auto_id = 0
 
     def __init__(self, name, category):
@@ -113,3 +141,16 @@ class Logger(metaclass=SingletonByName):
     def write(self, text):
         with open(f'{self.path}/log/{self.name}.txt', "a", encoding='utf-8') as f:
             f.write(f'\n{text}')
+
+
+if __name__ == '__main__':
+    a = MainCategory('Web')
+    b = Category('Java', '123')
+    a.add(b)
+    print(b.parent.name, b.name)
+
+    c = MainCategory('Mob')
+    d = Category('Java', '123')
+    c.add(d)
+    print(c.all_main_category)
+

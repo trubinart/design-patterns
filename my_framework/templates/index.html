@@ -20,6 +20,7 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <th scope="col">Раздел</th>
                     <th scope="col">Категория</th>
                     <th scope="col">Курс</th>
                     <th scope="col">Тип</th>
@@ -29,6 +30,7 @@
                 <tbody>
                 {% for item in objects_list %}
                 <tr>
+                    <th>{{item.category.parent.name}}</th>
                     <th>{{item.category.name}}</th>
                     <td>{{item.name}}</td>
                     <td>{{item.types}}</td>

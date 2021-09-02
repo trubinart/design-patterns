@@ -1,5 +1,5 @@
 from views import Index, NoPage, NotAccess, Contacts, \
-    CreateCategory, CreateCourse, ChoseCopyCourse, CopyCourse
+    CreateCategory, CreateCourse, CopyCourse, ChoseCopyCourse
 
 routes = {
     '/': Index(),
