@@ -3,13 +3,12 @@ from .middleware import check_allowed_hosts
 from .requests import GetRequest, PostRequest
 import sys
 
-from patterns.create_patterns import Logger
 from patterns.structure_patterns import Debug
 
 sys.path.append("..")
-from patterns.create_patterns import Logger
+from patterns.behavioral_patterns import Logger
 
-logger = Logger('main')
+logger = Logger('main',console=True, file=True )
 
 
 class Framework:

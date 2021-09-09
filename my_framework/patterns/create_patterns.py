@@ -1,6 +1,8 @@
 import copy
 import os
-from abc import ABC, abstractmethod
+from abc import ABC
+from .behavioral_patterns import SubscribeCourse, ProtoSubscriber
+
 
 class MainCategoryPrototype(ABC):
     all_main_category = []
@@ -30,6 +32,7 @@ class MainCategory(MainCategoryPrototype):
         self.category.remove(category)
         category.set_parent(None)
 
+
 class Category(MainCategoryPrototype):
     auto_id = 0
 
@@ -49,14 +52,24 @@ class Category(MainCategoryPrototype):
     def clone(self):
         return copy.deepcopy(self)
 
+    @property
+    def get_iter(self):
+        return iter(self.courses)
+
 
 class CoursePrototype:
+
+    all_students = []
 
     def clone(self):
         return copy.deepcopy(self)
 
+    @property
+    def get_iter(self):
+        return iter(self.all_students)
 
-class Course(CoursePrototype):
+
+class Course(CoursePrototype, SubscribeCourse):
 
     def __init__(self, name, category):
         self.name = name
@@ -97,6 +110,7 @@ class Engine:
     def __init__(self):
         self.categories = []
         self.courses = []
+        self.students = []
 
     @staticmethod
     def create_category(name, category=None):
@@ -133,24 +147,33 @@ class SingletonByName(type):
             return cls.__instance[name]
 
 
-class Logger(metaclass=SingletonByName):
-    path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    def __init__(self, name):
+# class Logger(metaclass=SingletonByName):
+#     path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#
+#     def __init__(self, name):
+#         self.name = name
+#
+#     def write(self, text):
+#         with open(f'{self.path}/log/{self.name}.txt', "a", encoding='utf-8') as f:
+#             f.write(f'\n{text}')
+
+
+class User:
+    def __init__(self, name, phone, email):
         self.name = name
-
-    def write(self, text):
-        with open(f'{self.path}/log/{self.name}.txt', "a", encoding='utf-8') as f:
-            f.write(f'\n{text}')
+        self.phone = phone
+        self.email = email
 
 
-if __name__ == '__main__':
-    a = MainCategory('Web')
-    b = Category('Java', '123')
-    a.add(b)
-    print(b.parent.name, b.name)
+class Student(User, ProtoSubscriber):
 
-    c = MainCategory('Mob')
-    d = Category('Java', '123')
-    c.add(d)
-    print(c.all_main_category)
+    def __init__(self, name, phone, email):
+        self.courses = []
+        super().__init__(name, phone, email)
+
+    def update(self, course: Course):
+        for key, value in self.notify_type.items():
+            if value == True:
+                print(f'Уведомили {self.name} по {key} об обновлении курса {course.name}')
+
 

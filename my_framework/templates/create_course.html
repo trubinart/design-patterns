@@ -21,7 +21,7 @@
                     <div class="mb-3">
                         <select class="form-select" name="category_id" aria-label="Default select example">
                             <option selected>Категория</option>
-                            {% for item in objects_list %}
+                            {% for item in category_list %}
                             <option value="{{item.id}}">{{item.name}}</option>
                             {%endfor%}
                         </select>

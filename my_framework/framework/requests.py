@@ -19,7 +19,7 @@ class PostRequest:
         data = {}
         length_data = env.get('CONTENT_LENGTH')
         data_for_bytes = env['wsgi.input'].read(int(length_data))
-        data_for_string = unquote(data_for_bytes.decode("utf8"))
+        data_for_string = unquote(data_for_bytes.decode("utf8")).replace('+', ' ')
         split_1 = data_for_string.split('&')
         for i in split_1:
             split_2 = i.split('=')
