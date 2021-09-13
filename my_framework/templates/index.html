@@ -30,14 +30,14 @@
                 <tbody>
                 {% for item in courses_list %}
                 <tr>
-                    <th>{{item.category.parent.name}}</th>
-                    <th>{{item.category.name}}</th>
+                    <th>{{item.main_category}}</th>
+                    <th>{{item.category}}</th>
                     <td>{{item.name}}</td>
                     <td>{{item.types}}</td>
                     <td>{{item.place}}</td>
                     <td>
                         <form action="/correct-course/" method="post">
-                            <input type="hidden" name="course" value="{{item.name}}"/>
+                            <input type="hidden" name="course" value="{{item.id}}"/>
                             <button>Редактировать курс</button>
                         </form>
                     </td>
@@ -60,7 +60,7 @@
                         <select class="form-select" name="student" aria-label="Default select example">
                             <option selected>Выберите ученика</option>
                             {% for item in students_list %}
-                            <option value={{item.phone}}>{{item.name}}</option>
+                            <option value={{item.id}}>{{item.name}}</option>
                             {%endfor%}
                         </select>
                     </div>
@@ -68,7 +68,7 @@
                         <select class="form-select" name="course" aria-label="Default select example">
                             <option selected>Выберите курс</option>
                             {% for item in courses_list %}
-                            <option value="{{item.name}}">{{item.name}}</option>
+                            <option value="{{item.id}}">{{item.name}}</option>
                             {%endfor%}
                         </select>
                     </div>

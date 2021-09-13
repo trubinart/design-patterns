@@ -19,7 +19,7 @@
                         <select class="form-select" name="course_for_copy" aria-label="Default select example">
                             <option selected>Курс</option>
                             {% for item in objects_list %}
-                            <option value="{{item.name}}">{{item.name}}</option>
+                            <option value="{{item.id}}">{{item.name}}</option>
                             {%endfor%}
                         </select>
                     </div>

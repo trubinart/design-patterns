@@ -18,11 +18,11 @@ class MainCategoryPrototype(ABC):
 
 
 class MainCategory(MainCategoryPrototype):
-    def __init__(self, name):
+    def __init__(self, name, id):
         self.name = name
+        self.id = id
         self.category = []
-        self.all_main_category.append(self)
-        self.all_main_category_name.append(name)
+
 
     def add(self, category):
         self.category.append(category)
@@ -40,21 +40,11 @@ class Category(MainCategoryPrototype):
         self.id = Category.auto_id
         Category.auto_id += 1
         self.name = name
-        self.category = category
-        self.courses = []
-
-    def course_count(self):
-        result = len(self.courses)
-        if self.category:
-            result += self.category.course_count()
-        return result
+        self.id = category
 
     def clone(self):
         return copy.deepcopy(self)
 
-    @property
-    def get_iter(self):
-        return iter(self.courses)
 
 
 class CoursePrototype:
@@ -71,39 +61,41 @@ class CoursePrototype:
 
 class Course(CoursePrototype, SubscribeCourse):
 
-    def __init__(self, name, category):
+    def __init__(self, name, category, main_category):
         self.name = name
         self.category = category
-        self.category.courses.append(self)
+        self.main_category = main_category
 
 
 class LifeCourse(Course):
-    all_place = {'office_1': 'Офис в центре', 'office_2': 'Офис в химках'}
+    # all_place = {'office_1': 'Офис в центре', 'office_2': 'Офис в химках'}
 
-    def __init__(self, name, category, place):
-        super().__init__(name, category)
-        self.place = self.all_place[place]
+    def __init__(self, name, category, place, main_category):
+        super().__init__(name, category, main_category)
+        self.place = place
         self.types = 'Курс в Москве'
 
 
-class OnlineCourse(Course):
-    all_place = {'gm': 'Google Meet', 'zoom': 'Zoom'}
 
-    def __init__(self, name, category, place):
-        super().__init__(name, category)
-        self.place = self.all_place[place]
+class OnlineCourse(Course):
+    # all_place = {'gm': 'Google Meet', 'zoom': 'Zoom'}
+
+    def __init__(self, name, category, place, main_category):
+        super().__init__(name, category, main_category)
+        self.place = place
         self.types = 'Онлайн курс'
+
 
 
 class CourseFactory:
     types = {
-        'life': LifeCourse,
-        'online': OnlineCourse
+        'Офлайн формат': LifeCourse,
+        'Онлайн формат': OnlineCourse
     }
 
     @classmethod
-    def create(cls, type_, name, category, place):
-        return cls.types[type_](name, category, place)
+    def create(cls, type_, name, category, place, main_category):
+        return cls.types[type_](name, category, place, main_category)
 
 
 class Engine:
@@ -124,8 +116,8 @@ class Engine:
         raise Exception(f'Нет категории с id = {id}')
 
     @staticmethod
-    def create_course(type_, name, category, place):
-        return CourseFactory.create(type_, name, category, place)
+    def create_course(type_, name, category, place, main_category):
+        return CourseFactory.create(type_, name, category, place, main_category)
 
 
 class SingletonByName(type):
