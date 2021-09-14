@@ -82,21 +82,22 @@ class CreateCategory(CreateView):
         name = data['category_name']
         main_category_name = data['main_category']
 
-        UnitOfWork.new_current()
+        if not name.isdigit() and not main_category_name.isdigit():
+            UnitOfWork.new_current()
 
-        try:
-            id_main_category = GetMainCategoryMapper.find_by_name(main_category_name).id
-        except:
-            main_category =  MainCategoryModel(main_category_name)
-            main_category.mark_new()
-            UnitOfWork.get_current().commit()
-            id_main_category = GetMainCategoryMapper.find_by_name(main_category_name).id
-        finally:
-            category = CategoryModel(name, id_main_category)
-            category.mark_new()
-            UnitOfWork.get_current().commit()
-            print(f'2 = {name}')
-            logger.write(f'Создана категория| {name} | и главная категория {main_category_name}')
+            try:
+                id_main_category = GetMainCategoryMapper.find_by_name(main_category_name).id
+            except:
+                main_category =  MainCategoryModel(main_category_name)
+                main_category.mark_new()
+                UnitOfWork.get_current().commit()
+                id_main_category = GetMainCategoryMapper.find_by_name(main_category_name).id
+            finally:
+                category = CategoryModel(name, id_main_category)
+                category.mark_new()
+                UnitOfWork.get_current().commit()
+                print(f'2 = {name}')
+                logger.write(f'Создана категория| {name} | и главная категория {main_category_name}')
     @Debug(name='CreateCategory')
     def __call__(self, *args, **kwargs):
         return super().__call__(*args, **kwargs)
@@ -112,20 +113,21 @@ class CreateCourse(CreateView):
         category_id = data['category_id']
         course_type = data['type']
 
-        if course_type == 'Офлайн формат':
-            place = data['place_offline']
+        if not name.isdigit() and not course_type.isdigit() and category_id.isdigit():
+            if course_type == 'Офлайн формат':
+                place = data['place_offline']
 
-        elif course_type == 'Онлайн формат':
-            place = data['place_online']
-        else:
-            place = None
+            elif course_type == 'Онлайн формат':
+                place = data['place_online']
+            else:
+                place = None
 
-        UnitOfWork.new_current()
-        course = CourseModel(name, course_type, category_id, place)
-        course.mark_new()
-        UnitOfWork.get_current().commit()
+            UnitOfWork.new_current()
+            course = CourseModel(name, course_type, category_id, place)
+            course.mark_new()
+            UnitOfWork.get_current().commit()
 
-        logger.write(f'Создан курc| {category_id} | {name} | {course_type} |  {place}')
+            logger.write(f'Создан курc| {category_id} | {name} | {course_type} |  {place}')
 
     @Debug(name='CreateCourse')
     def __call__(self, *args, **kwargs):
@@ -167,12 +169,14 @@ class CreateStudent(CreateView):
         name = data['fio']
         phone = data['phone']
         email = data['email']
-        UnitOfWork.new_current()
-        student = StudentModel(name, phone, email)
-        student.mark_new()
-        UnitOfWork.get_current().commit()
 
-        logger.write(f'Студент создан | {name}')
+        if not name.isdigit() and not email.isdigit() and phone.isdigit():
+            UnitOfWork.new_current()
+            student = StudentModel(name, phone, email)
+            student.mark_new()
+            UnitOfWork.get_current().commit()
+
+            logger.write(f'Студент создан | {name}')
 
     @Debug(name='CreateStudent')
     def __call__(self, *args, **kwargs):
